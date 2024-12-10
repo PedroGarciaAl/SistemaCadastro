@@ -1,5 +1,8 @@
 import java.io.*;
+import java.util.Locale;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UsuarioFuncoes {
 
@@ -19,17 +22,17 @@ public class UsuarioFuncoes {
                     System.out.println(perguntas[i]);
                     String info = sc.nextLine();
 
-                    if (i == 0) { //Verificando se é o nome
-                        if (info.length() >= 10) {
-                            respostas[i] = info;
-                            i++;
-                            continue;
-                        } else
+                    if (i == 0) {
+                        if (info.length() < 10)
                             throw new IllegalArgumentException("Por favor, insira um nome com no mínimo 10 caracteres");
-                    }
-
-                    if (i==1){
-                            
+                    } else if (i == 1)
+                    {
+                        validaEmail(info);
+                    } else if (i == 2){
+                        int idade = Integer.parseInt(info);
+                        if (idade < 18){
+                            throw new IllegalArgumentException("A idade deve ser maior de 18 anos");
+                        }
                     }
 
                     respostas[i] = info;
@@ -73,8 +76,8 @@ public class UsuarioFuncoes {
         System.out.println("\n====== Usuarios Cadastrados ======");
         for (File usuario : usuarios) {
             try (FileReader frLeitorUsuario = new FileReader(usuario);
-                 BufferedReader bwLeitorUsuario = new BufferedReader(frLeitorUsuario)){
-                System.out.println(bwLeitorUsuario.readLine());
+                 BufferedReader brLeitorUsuario = new BufferedReader(frLeitorUsuario)){
+                System.out.println(brLeitorUsuario.readLine());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -125,5 +128,39 @@ public class UsuarioFuncoes {
         }
 
         return numeroUsuarios;
+    }
+
+
+    public static void validaEmail(String email){
+        String regex = "([a-zA-Z0-9\\._-])+@([a-zA-Z0-9\\._-])";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        if (matcher.find()){
+
+            File pastaUsuarios = new File("usuarios");
+            File[] usuarios = pastaUsuarios.listFiles();
+
+            for (File usuario : usuarios){
+                try (FileReader frLeitorUsuario = new FileReader(usuario);
+                     BufferedReader brLeitorUsuario = new BufferedReader(frLeitorUsuario)){
+                    String dadoUsuario;
+
+                    // Pulando a primeira linha
+                    brLeitorUsuario.readLine();
+
+                    if (brLeitorUsuario.readLine().equals(email)){
+                        throw new IllegalArgumentException("Já existe um usuário com esse email");
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }else
+        {
+            throw new IllegalArgumentException("Por favor digite um email válido");
+        }
     }
 }
