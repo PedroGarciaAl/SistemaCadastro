@@ -22,6 +22,7 @@ public class UsuarioFuncoes {
                     if (i == 0) { //Verificando se é o nome
                         if (info.length() >= 10) {
                             respostas[i] = info;
+                            i++;
                             continue;
                         } else
                             throw new IllegalArgumentException("Por favor, insira um nome com no mínimo 10 caracteres");
