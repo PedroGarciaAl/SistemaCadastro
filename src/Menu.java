@@ -8,7 +8,7 @@ public class Menu {
                 "2 - Listar usuários cadastrados\n" +
                 "3 - Cadastrar nova pergunta do formulário\n" +
                 "4 - Deletar pergunta do formulário\n" +
-                "5 - Pesquisar usuário por nome ou email\n" +
+                "5 - Pesquisar usuário pelo nome\n" +
                 "0 - Sair\n" +
                 "==================================");
         return sc.nextInt();

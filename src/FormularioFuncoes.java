@@ -27,13 +27,11 @@ public class FormularioFuncoes {
         int opcao;
 
         do {
-            System.out.print("Digite o número da pergunta que deseja deletar:");
+            System.out.print("Digite o número da pergunta que deseja deletar ou -1 para voltar:");
             opcao = sc.nextInt();
+            if (opcao == -1)
+                break;
         } while ( opcao <= 4);
-
-
-        // MUDAR DEPOIS:
-        // SE TIVER MAIS DE 2 DIGITOS DE PERGUNTAS ELE NÃO RECONHECE POR SÓ PEGAR O CHAR NA PRIMEIRA POSIÇÃO
 
         try (FileReader frFormularioAntigo = new FileReader(formularioAntigo);
              BufferedReader brFormularioAntigo = new BufferedReader(frFormularioAntigo);
