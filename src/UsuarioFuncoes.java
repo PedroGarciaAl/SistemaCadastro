@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class UsuarioFuncoes {
 
     public static void cadastraUsuario(){
+        Locale.setDefault(new Locale("pt","BR"));
         Scanner sc = new Scanner(System.in);
 
         File fileFormulario = new File("arquivos/formulario.txt");
@@ -28,11 +29,23 @@ public class UsuarioFuncoes {
                     } else if (i == 1)
                     {
                         validaEmail(info);
-                    } else if (i == 2){
+                    } else if (i == 2)
+                    {
                         int idade = Integer.parseInt(info);
                         if (idade < 18){
                             throw new IllegalArgumentException("A idade deve ser maior de 18 anos");
                         }
+                    } else if (i == 3){
+                        if (info.contains(",")) {
+                            try {
+                                info = info.replace(",", ".");
+                                double altura = Double.parseDouble(info);
+                                info = String.valueOf(altura);
+                            } catch (NumberFormatException e) {
+                                throw new IllegalArgumentException("Insira um número válido");
+                            }
+                        } else
+                            throw new IllegalArgumentException("Insira um número separado por vírgula");
                     }
 
                     respostas[i] = info;
