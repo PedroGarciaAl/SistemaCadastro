@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +6,6 @@ import java.util.regex.Pattern;
 public class UsuarioFuncoes {
 
     public static void cadastraUsuario(){
-        Locale.setDefault(new Locale("pt","BR"));
         Scanner sc = new Scanner(System.in);
 
         File fileFormulario = new File("arquivos/formulario.txt");
@@ -106,7 +104,7 @@ public class UsuarioFuncoes {
 
         File pastaUsuarios = new File("usuarios");
         File[] usuarios = pastaUsuarios.listFiles();
-        String usuarioDesejado = null;
+        String usuarioDesejado;
 
         System.out.println("Qual usuário você está buscando?");
         usuarioDesejado = sc.nextLine();
@@ -114,7 +112,7 @@ public class UsuarioFuncoes {
         for (File usuario : usuarios) {
             try (FileReader frLeitorUsuario = new FileReader(usuario);
                  BufferedReader bwLeitorUsuario = new BufferedReader(frLeitorUsuario)){
-                String linha = null;
+                String linha;
 
                 if ((linha = bwLeitorUsuario.readLine()).startsWith(usuarioDesejado)){
                     System.out.println("--------------------");
@@ -158,7 +156,6 @@ public class UsuarioFuncoes {
             for (File usuario : usuarios){
                 try (FileReader frLeitorUsuario = new FileReader(usuario);
                      BufferedReader brLeitorUsuario = new BufferedReader(frLeitorUsuario)){
-                    String dadoUsuario;
 
                     // Pulando a primeira linha
                     brLeitorUsuario.readLine();
